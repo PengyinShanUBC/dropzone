@@ -27,9 +27,9 @@
 
 (function() {
   var Dropzone, Emitter, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without,
-    __slice = [].slice,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+      __slice = [].slice,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   noop = function() {};
 
@@ -104,11 +104,11 @@
 
 
     /*
-    This is a list of all available events you can register on a dropzone object.
-    
-    You can register an event handler like this:
-    
-        dropzone.on("dragEnter", function() { });
+     This is a list of all available events you can register on a dropzone object.
+
+     You can register an event handler like this:
+
+     dropzone.on("dragEnter", function() { });
      */
 
     Dropzone.prototype.events = ["drop", "dragstart", "dragend", "dragenter", "dragover", "dragleave", "addedfile", "addedfiles", "removedfile", "thumbnail", "error", "errormultiple", "processing", "processingmultiple", "uploadprogress", "totaluploadprogress", "sending", "sendingmultiple", "success", "successmultiple", "canceled", "canceledmultiple", "complete", "completemultiple", "reset", "maxfilesexceeded", "maxfilesreached", "queuecomplete"];
@@ -220,12 +220,12 @@
       },
 
       /*
-      Those functions register themselves to the events on init and handle all
-      the user interface specific stuff. Overwriting them won't break the upload
-      but can break the way it's displayed.
-      You can overwrite them if you don't like the default behavior. If you just
-      want to add an additional event handler, register it on the dropzone object
-      and don't overwrite those options.
+       Those functions register themselves to the events on init and handle all
+       the user interface specific stuff. Overwriting them won't break the upload
+       but can break the way it's displayed.
+       You can overwrite them if you don't like the default behavior. If you just
+       want to add an additional event handler, register it on the dropzone object
+       and don't overwrite those options.
        */
       drop: function(e) {
         return this.element.classList.remove("dz-drag-hover");
@@ -1094,9 +1094,15 @@
           var orientation = 0;
           EXIF.getData(img, function() {
             switch(parseInt(EXIF.getTag(this, "Orientation"))){
-              case 3: orientation = 180; break;
-              case 6: orientation = -90; break;
-              case 8: orientation = 90; break;
+              case 3:
+                orientation = 180;
+                break;
+              case 6:
+                orientation = -90;
+                break;
+              case 8:
+                orientation = 90;
+                break;
             }
           });
           file.width = img.width;
@@ -1648,10 +1654,10 @@
 
 
   /*
-  
-  Bugfix for iOS 6 and 7
-  Source: http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
-  based on the work of https://github.com/stomita/ios-imagefile-megapixel
+
+   Bugfix for iOS 6 and 7
+   Source: http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
+   based on the work of https://github.com/stomita/ios-imagefile-megapixel
    */
 
   detectVerticalSquash = function(img) {
@@ -1684,12 +1690,12 @@
     }
   };
 
-  drawImageIOSFix = function(orientation, ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
+  drawImageIOSFix = function(o, ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
     var vertSquashRatio;
     vertSquashRatio = detectVerticalSquash(img);
     dh = dh / vertSquashRatio;
     ctx.translate( dx+dw/2, dy+dh/2 );
-    ctx.rotate(o*Math.PI/180);
+    ctx.rotate(-o*Math.PI/180);
     dx = -dw/2;
     dy = -dh/2;
     return ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
